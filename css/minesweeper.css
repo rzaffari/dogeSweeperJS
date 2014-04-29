@@ -1,0 +1,191 @@
+.doge {
+	background: #FFFFFF url("img/doge.jpeg") center center no-repeat scroll !important;
+	background-size: contain !important;
+}
+
+.doge-flag {
+	background: #FFFFFF url("img/dogeFlag.jpeg") center center no-repeat scroll !important;
+	background-size: contain !important;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	background: #faf8ef;
+	color: #323240;
+	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+	font-size: 18px;
+}
+
+h1 {
+	text-align: center;
+	font-weight: bold;
+	margin: 0;
+}
+
+.content {
+	margin: 0px auto;
+	width: 500px;
+}
+
+.controls {
+	text-align: center;
+}
+
+.controls:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+input[type=checkbox] {
+	appearance: none;
+	border-radius: 15px;
+	cursor: pointer;
+	display: inline-block;
+	height: 31px;
+	padding: 1px;
+	position: relative;
+	margin: 0px;
+	width: 52px;
+	outline: 0;
+	transition: all 0.3s ease-out;
+	transform: scale(1);
+	float: left;
+	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+input[type=checkbox]:checked {
+	box-shadow: inset 0px 0px 0px 20px #666666;
+}
+
+input[type=checkbox]:checked:after {
+	left: 22px;
+}
+
+
+input[type=checkbox]:after {
+	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
+	content: '';
+	cursor: pointer;
+	height: 29px;
+	position: absolute;
+	width: 29px;
+	transition: all 0.1s ease-in 0.1s;
+	background: white;
+}
+
+.restart, .verify {
+	background: #3A3A3A;
+	border-radius: 5px;
+	cursor: pointer;
+	height: 35px;
+	color: #faf8ef;
+	float: left;
+	text-decoration: none;
+	line-height: 35px;
+	padding: 0px 13px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.ms-container {
+	width: 500px;
+	height: 500px;
+	/*margin-top: 15px;*/
+	position: relative;
+	padding: 15px;
+	background: #3A3A3A;
+	border-radius: 6px;
+	box-sizing: border-box;
+	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.grid-container {
+	position: absolute;
+	z-index: 1;
+	perspective: 1000;
+}
+
+.grid-row {
+	margin-bottom: 10px;
+}
+
+.grid-row:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.grid-cell, 
+.inner-cell {
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+	float: left;
+	border-radius: 3px;
+}
+
+.grid-cell {
+	transform-style: preserve-3d;
+}
+
+.inner-cell {
+	background: rgba(255, 255, 255, 0.35);
+}
+
+.grid-cell:hover {
+	box-shadow: 0 0 8px #fff;
+	z-index: 20; 
+}
+
+.inner-tile {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	border-radius: 3px;
+	background: #eee4da;
+	text-align: center;
+	font-weight: bold;
+	z-index: 10;
+	font-size: 35px;
+	backface-visibility: hidden;
+}
+
+
+.flip {
+	animation: flip 0.5s;
+}
+
+.doge-jump {
+	animation-name: doge-jump;
+	animation-delay: 0.5s;
+	animation-iteration-count: infinite;
+	animation-duration: 1.2s;
+}
+
+@keyframes flip {
+	0% { transform: rotateY(180deg) }
+	50% { transform: rotateY(180deg) }
+}
+
+@keyframes doge-jump {
+	20%, 40%, 60%, 80% { transform: scale(1.0); }
+	0%, 10%, 30%, 50%, 70%, 90% { transform: scale(1.4); }
+
+	0% { transform: rotate(0);
+		timing-function: ease-in-out; 
+		z-index: 50; }
+	20% { transform: rotate(30deg);
+		timing-function: ease-in-out; }
+	40% { transform: rotate(-30deg);
+		timing-function: ease-in-out; }
+	60% { transform: rotate(30deg);
+		timing-function: ease-in-out; }
+	80% { transform: rotate(-30deg);
+		timing-function: ease-in-out; }
+}
