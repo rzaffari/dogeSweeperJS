@@ -21,13 +21,13 @@ EventHandler.prototype = {
 		};
 	},
 
-	attach: function (callback) {
+	attach: function (clas, callback) {
 		var i = 0
-			, cells = document.querySelectorAll('.grid-cell')
-			, cell;
+			, elems = document.querySelectorAll(clas)
+			, elem;
 
-		while (cell = cells[i++]) {
-			cell.addEventListener('click', callback, false);
+		while (elem = elems[i++]) {
+			elem.addEventListener('click', callback, false);
 		}
 	},
 
@@ -42,6 +42,19 @@ EventHandler.prototype = {
 				domCell.click();
 			}, 300);
 		}
+	},
+
+	resetGrid: function () {
+		debugger;
+		var i = 0
+			, inners = this.gridContainer.querySelectorAll('.inner-tile')
+			, inner;
+
+		while (inner = inners[i++]) {
+			classie.remove(inner.parentNode, 'flip');
+			inner.parentNode.removeChild(inner);
+		}
+
 	}
 
 };
