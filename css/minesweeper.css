@@ -4,7 +4,7 @@
 }
 
 .doge-flag {
-	background: #FFFFFF url("img/dogeFlag.jpeg") center center no-repeat scroll !important;
+	background: #FFFFFF url("img/dogeFlag.png") center center no-repeat scroll !important;
 	background-size: contain !important;
 }
 
@@ -28,8 +28,19 @@ h1 {
 	width: 500px;
 }
 
-.message {
-	height: 50px;
+.message-container {
+	position: absolute;
+	margin-top: -8px;
+}
+
+.game-won > p {
+	color: green;
+	font-weight: bold;
+}
+
+.game-over > p {
+	color: red;
+	font-weight: bold;
 }
 
 .controls {

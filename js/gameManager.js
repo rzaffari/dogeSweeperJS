@@ -13,8 +13,8 @@ GameManager.prototype = {
 		me.grid        	= new Grid(me.size);
 		me.eventHandler = new EventHandler();
 	    me.score       	= 0;
-	    me.over        	= false;
 	    me.won         	= false;
+	    me.dogesFlips	= 0;
 
 	    me.setupTiles();
 
@@ -75,6 +75,10 @@ GameManager.prototype = {
 		me.grid.mineCells().forEach( function (mine) {
 			me.eventHandler.trigger(mine);
 		});
+
+		if(++me.dogesFlips == me.minesCount){
+			me.gameOver();	
+		}
 	},
 
 	showNeighborTile : function (tile) {
@@ -83,6 +87,11 @@ GameManager.prototype = {
 				me.eventHandler.trigger(neigh);
 			});
 		}
+	},
+
+	gameOver: function () {
+		me.eventHandler.detach('.grid-cell', this.showTile);
+		me.eventHandler.message(me.over);
 	}
 
 	/*showAll: function () {

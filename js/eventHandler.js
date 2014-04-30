@@ -1,5 +1,6 @@
 function EventHandler () {
-	this.gridContainer = document.querySelector(".grid-container");
+	this.gridContainer 		= document.querySelector(".grid-container");
+	this.messageContainer 	= document.querySelector(".message-container");
 
 	this.setupData();
 }
@@ -31,6 +32,16 @@ EventHandler.prototype = {
 		}
 	},
 
+	detach: function (clas, callback) {
+		var i = 0
+			, elems = document.querySelectorAll(clas)
+			, elem;
+
+		while (elem = elems[i++]) {
+			elem.removeEventListener('click', callback);
+		}
+	},
+
 	selectDOMCell: function (cell) {
 		return document.querySelector('.grid-cell[data-x="'+ cell.x +'"][data-y="'+ cell.y +'"]');
 	},
@@ -45,16 +56,25 @@ EventHandler.prototype = {
 	},
 
 	resetGrid: function () {
-		debugger;
 		var i = 0
 			, inners = this.gridContainer.querySelectorAll('.inner-tile')
 			, inner;
 
 		while (inner = inners[i++]) {
 			classie.remove(inner.parentNode, 'flip');
+			classie.remove(inner.parentNode, 'doge-jump');
 			inner.parentNode.removeChild(inner);
 		}
 
+	},
+
+	message: function (won) {
+		var type    = won ? "game-won" : "game-over";
+		var message = won ? "Such win!" : "Such over!";
+
+		classie.add(this.messageContainer, type)
+		this.messageContainer.children[0].textContent = message;
+		//this.messageContainer.getElementsByTagName("p")[0].textContent = message;
 	}
 
 };
