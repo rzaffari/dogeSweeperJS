@@ -22,13 +22,16 @@ EventHandler.prototype = {
 		};
 	},
 
-	attach: function (clas, callback) {
+	attach: function (clas, callback, scope) {
 		var i = 0
 			, elems = document.querySelectorAll(clas)
-			, elem;
+			, elem
+			, func = function (event) {
+				callback.call(this, event, scope);
+			};
 
 		while (elem = elems[i++]) {
-			elem.addEventListener('click', callback, false);
+			elem.addEventListener('click', func);
 		}
 	},
 
@@ -48,7 +51,7 @@ EventHandler.prototype = {
 	},
 
 	flip: function(cell) {
-		var domCell = me.eventHandler.selectDOMCell(cell);
+		var domCell = this.selectDOMCell(cell);
 		if(!classie.has(domCell, 'flip')) {
 			setTimeout(function () {
 				domCell.click();

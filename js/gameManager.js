@@ -2,33 +2,35 @@ function GameManager(size) {
   	this.size 				= size; // Size of the grid
   	this.minesCount     	= 10;
 
-  	me = this;
+  	//me = this;
 
-  	me.start();
+  	this.start();
 }
 
 GameManager.prototype = {
 
 	start: function  () {
-		me.grid        	= new Grid(me.size);
-		me.eventHandler = new EventHandler();
-	    me.score       	= 0;
-	    me.won         	= false;
-	    me.dogesFlips	= 0;
+		this.grid        	= new Grid(this.size);
+		this.eventHandler = new EventHandler();
+	    this.score       	= 0;
+	    this.won         	= false;
+	    this.dogesFlips	= 0;
 
-	    me.setupTiles();
+	    this.setupTiles();
 
-	    me.eventHandler.attach('.grid-cell', this.showTile);
-	    me.eventHandler.attach('.restart', me.reset);
+	    this.eventHandler.attach('.grid-cell', this.showTile, this);
+	    this.eventHandler.attach('.restart', this.reset);
 	},
 
 	reset: function () {
-		me.eventHandler.resetGrid();
-		me.eventHandler.clearMessage(me.over);
-		me.start();
+		this.eventHandler.resetGrid();
+		this.eventHandler.clearMessage(this.over);
+		this.start();
 	},
 
 	setupTiles: function  () {
+		var me = this;
+		
 		me.addMines();
 
 		var mines = me.grid.mineCells();
@@ -49,11 +51,11 @@ GameManager.prototype = {
 		};
 	},
 
-	showTile: function() {
+	showTile: function(event, scope) {
 		if(!classie.has(this, 'flip')) {
 			var cell = this
 				, inner = document.createElement("div")
-				, tile = me.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y });
+				, tile = scope.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y });
 
 			classie.add(inner, 'inner-tile');
 			inner.textContent = tile.displayValue();
@@ -61,14 +63,16 @@ GameManager.prototype = {
 			classie.add(cell, 'flip');
 
 			if (tile.isMine()){
-				me.showMineTile(cell, inner);
+				scope.showMineTile(cell, inner);
 			} else{
-				me.showNeighborTiles(tile);
+				scope.showNeighborTiles(tile);
 			}
 		}
 	},
 
 	showMineTile : function (cell, inner) {
+		var me = this;
+
 		classie.add(inner, 'doge');
 
 		if(document.querySelectorAll('.doge-jump').length == 0) classie.add(cell, 'doge-jump');
@@ -83,6 +87,8 @@ GameManager.prototype = {
 	},
 
 	showNeighborTiles : function (tile) {
+		var me = this;
+
 		if (tile.displayValue() === ""){
 			me.grid.neighborsOf(tile).forEach( function (neigh) {
 				me.eventHandler.flip(neigh);
@@ -94,12 +100,12 @@ GameManager.prototype = {
 	},
 
 	verify: function() {
-		var cells = me.eventHandler.remainingCells()
-			, mines = me.grid.mineCells();
+		var cells = this.eventHandler.remainingCells()
+			, mines = this.grid.mineCells();
 
 		if (cells.length === mines.length) {
-			me.won = true;
-			me.endGame();
+			this.won = true;
+			this.endGame();
 		}
 	},
 
