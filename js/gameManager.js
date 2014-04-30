@@ -24,6 +24,7 @@ GameManager.prototype = {
 
 	reset: function () {
 		me.eventHandler.resetGrid();
+		me.eventHandler.clearMessage(me.over);
 		me.start();
 	},
 
@@ -48,7 +49,7 @@ GameManager.prototype = {
 		};
 	},
 
-	showTile: function(event) {
+	showTile: function() {
 		if(!classie.has(this, 'flip')) {
 			var cell = this
 				, inner = document.createElement("div")
@@ -62,7 +63,7 @@ GameManager.prototype = {
 			if (tile.isMine()){
 				me.showMineTile(cell, inner);
 			} else{
-				me.showNeighborTile(tile);
+				me.showNeighborTiles(tile);
 			}
 		}
 	},
@@ -73,25 +74,38 @@ GameManager.prototype = {
 		if(document.querySelectorAll('.doge-jump').length == 0) classie.add(cell, 'doge-jump');
 
 		me.grid.mineCells().forEach( function (mine) {
-			me.eventHandler.trigger(mine);
+			me.eventHandler.flip(mine);
 		});
 
 		if(++me.dogesFlips == me.minesCount){
-			me.gameOver();	
+			me.endGame();	
 		}
 	},
 
-	showNeighborTile : function (tile) {
+	showNeighborTiles : function (tile) {
 		if (tile.displayValue() === ""){
 			me.grid.neighborsOf(tile).forEach( function (neigh) {
-				me.eventHandler.trigger(neigh);
+				me.eventHandler.flip(neigh);
 			});
+		} else {
+			//Single tile or wave-border tile
+			me.verify();
 		}
 	},
 
-	gameOver: function () {
+	verify: function() {
+		var cells = me.eventHandler.remainingCells()
+			, mines = me.grid.mineCells();
+
+		if (cells.length === mines.length) {
+			me.won = true;
+			me.endGame();
+		}
+	},
+
+	endGame: function () {
 		me.eventHandler.detach('.grid-cell', this.showTile);
-		me.eventHandler.message(me.over);
+		me.eventHandler.message(me.won);
 	}
 
 	/*showAll: function () {

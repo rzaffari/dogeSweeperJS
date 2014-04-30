@@ -1,6 +1,8 @@
 function Grid(size) {
   this.size = size;
   this.cells = this.clearGrid();
+  this.mines = [];
+
 }
 
 Grid.prototype = {
@@ -51,13 +53,18 @@ Grid.prototype = {
 	},
 
 	mineCells: function() {
-		var mines = [];
+		var self = this
+			, mines = self.mines;
 
-		this.forEachCell(function (tile) {
-			if (tile.isMine()) {
-				mines.push({ x: tile.x, y: tile.y });
-			}
-		});
+		if (mines <= 0){
+
+			this.forEachCell(function (tile) {
+				if (tile.isMine()) {
+					mines.push({ x: tile.x, y: tile.y });
+				}
+			});
+
+		}
 
 		return mines;
 	},

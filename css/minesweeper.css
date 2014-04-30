@@ -92,7 +92,7 @@ input[type=checkbox]:after {
 	background: white;
 }
 
-.restart, .verify {
+.restart {
 	background: #3A3A3A;
 	border-radius: 5px;
 	cursor: pointer;
@@ -107,8 +107,7 @@ input[type=checkbox]:after {
 	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-.restart:hover,
-.verify:hover {
+.restart:hover {
 	box-shadow: 0 0 8px #050303;
 }
 
@@ -179,6 +178,14 @@ input[type=checkbox]:after {
 
 .flip {
 	animation: flip 0.5s;
+}
+
+.flip:hover {
+	box-shadow: none;
+}
+
+.disabled:hover {
+	box-shadow: none;
 }
 
 .doge-jump {
