@@ -39,6 +39,7 @@ EventHandler.prototype = {
 
 		while (elem = elems[i++]) {
 			elem.removeEventListener('click', callback);
+			classie.add(elem, 'disabled');
 		}
 	},
 
@@ -46,7 +47,7 @@ EventHandler.prototype = {
 		return document.querySelector('.grid-cell[data-x="'+ cell.x +'"][data-y="'+ cell.y +'"]');
 	},
 
-	trigger: function(cell) {
+	flip: function(cell) {
 		var domCell = me.eventHandler.selectDOMCell(cell);
 		if(!classie.has(domCell, 'flip')) {
 			setTimeout(function () {
@@ -68,13 +69,23 @@ EventHandler.prototype = {
 
 	},
 
-	message: function (won) {
-		var type    = won ? "game-won" : "game-over";
-		var message = won ? "Such win!" : "Such over!";
+	remainingCells: function() {
+		return this.gridContainer.querySelectorAll('.grid-cell:not(.flip)');
+	},
 
-		classie.add(this.messageContainer, type)
+	message: function (won) {
+		var clas = won ? "game-won" : "game-over"
+			, message = won ? "Such win!" : "Such over!";
+
+		classie.add(this.messageContainer, clas)
 		this.messageContainer.children[0].textContent = message;
-		//this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+	},
+
+	clearMessage: function (won) {
+		var clas = won ? "game-won" : "game-over";
+		classie.remove(this.messageContainer, clas);
+		this.messageContainer.children[0].textContent = '';
+
 	}
 
 };
