@@ -10,20 +10,24 @@ function GameManager(size) {
 GameManager.prototype = {
 
 	start: function  () {
-		this.grid        	= new Grid(this.size);
-		this.eventHandler 	= new EventHandler();
-	    this.score       	= 0;
-	    this.over        	= false;
-	    this.won         	= false;
+		me.grid        	= new Grid(me.size);
+		me.eventHandler = new EventHandler();
+	    me.score       	= 0;
+	    me.over        	= false;
+	    me.won         	= false;
 
-	    this.setupTiles();
+	    me.setupTiles();
 
-	    this.eventHandler.attach(this.showTile);
+	    me.eventHandler.attach('.grid-cell', this.showTile);
+	    me.eventHandler.attach('.restart', me.reset);
+	},
+
+	reset: function () {
+		me.eventHandler.resetGrid();
+		me.start();
 	},
 
 	setupTiles: function  () {
-		var me = this;
-
 		me.addMines();
 
 		var mines = me.grid.mineCells();
@@ -45,35 +49,40 @@ GameManager.prototype = {
 	},
 
 	showTile: function(event) {
-		var cell = this
-			, inner = document.createElement("div")
-			, tile = me.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y })
-			, value = tile.displayValue();
+		if(!classie.has(this, 'flip')) {
+			var cell = this
+				, inner = document.createElement("div")
+				, tile = me.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y });
 
-		classie.add(inner, 'inner-tile');
-		
-		inner.textContent = value;
-		cell.appendChild(inner);
-
-		if (tile.isMine()){
-			classie.add(inner, 'doge');
+			classie.add(inner, 'inner-tile');
+			inner.textContent = tile.displayValue();
+			cell.appendChild(inner);
 			classie.add(cell, 'flip');
 
-			if(document.querySelectorAll('.doge-jump').length == 0) classie.add(cell, 'doge-jump');
-
-			me.grid.mineCells().forEach( function (mine) {
-				me.eventHandler.trigger(mine);
-			});
-		} else{
-			classie.add(cell, 'flip');
-
-			if (!tile.isMine() && value === ""){
-				me.grid.neighborsOf(tile).forEach( function (neigh) {
-					me.eventHandler.trigger(neigh);
-				});
+			if (tile.isMine()){
+				me.showMineTile(cell, inner);
+			} else{
+				me.showNeighborTile(tile);
 			}
 		}
-		
+	},
+
+	showMineTile : function (cell, inner) {
+		classie.add(inner, 'doge');
+
+		if(document.querySelectorAll('.doge-jump').length == 0) classie.add(cell, 'doge-jump');
+
+		me.grid.mineCells().forEach( function (mine) {
+			me.eventHandler.trigger(mine);
+		});
+	},
+
+	showNeighborTile : function (tile) {
+		if (tile.displayValue() === ""){
+			me.grid.neighborsOf(tile).forEach( function (neigh) {
+				me.eventHandler.trigger(neigh);
+			});
+		}
 	}
 
 	/*showAll: function () {
