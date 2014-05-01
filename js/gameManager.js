@@ -2,8 +2,6 @@ function GameManager(size) {
   	this.size 				= size; // Size of the grid
   	this.minesCount     	= 10;
 
-  	//me = this;
-
   	this.start();
 }
 
@@ -11,21 +9,26 @@ GameManager.prototype = {
 
 	start: function  () {
 		this.grid        	= new Grid(this.size);
-		this.eventHandler = new EventHandler();
+		this.eventHandler 	= new EventHandler();
 	    this.score       	= 0;
 	    this.won         	= false;
-	    this.dogesFlips	= 0;
+	    this.dogesFlips		= 0;
 
 	    this.setupTiles();
 
 	    this.eventHandler.attach('.grid-cell', this.showTile, this);
-	    this.eventHandler.attach('.restart', this.reset);
+	    this.eventHandler.attach('.restart', this.reset, this);
 	},
 
-	reset: function () {
-		this.eventHandler.resetGrid();
-		this.eventHandler.clearMessage(this.over);
-		this.start();
+	reset: function (event, scope) {
+		me = scope;
+
+		me.eventHandler.detach('.grid-cell', me.showTile, this);
+		me.eventHandler.detach('.restart', me.reset, this);
+		
+		me.eventHandler.resetGrid();
+		me.eventHandler.clearMessage(me.over);
+		me.start();
 	},
 
 	setupTiles: function  () {
@@ -54,8 +57,9 @@ GameManager.prototype = {
 	showTile: function(event, scope) {
 		if(!classie.has(this, 'flip')) {
 			var cell = this
+				, me = scope
 				, inner = document.createElement("div")
-				, tile = scope.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y });
+				, tile = me.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y });
 
 			classie.add(inner, 'inner-tile');
 			inner.textContent = tile.displayValue();
@@ -63,9 +67,9 @@ GameManager.prototype = {
 			classie.add(cell, 'flip');
 
 			if (tile.isMine()){
-				scope.showMineTile(cell, inner);
+				me.showMineTile(cell, inner);
 			} else{
-				scope.showNeighborTiles(tile);
+				me.showNeighborTiles(tile);
 			}
 		}
 	},
@@ -110,8 +114,8 @@ GameManager.prototype = {
 	},
 
 	endGame: function () {
-		me.eventHandler.detach('.grid-cell', this.showTile);
-		me.eventHandler.message(me.won);
+		this.eventHandler.detach('.grid-cell', this.showTile);
+		this.eventHandler.message(this.won);
 	}
 
 	/*showAll: function () {

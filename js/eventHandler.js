@@ -31,7 +31,9 @@ EventHandler.prototype = {
 			};
 
 		while (elem = elems[i++]) {
+			elem['func'] = func;
 			elem.addEventListener('click', func);
+			classie.remove(elem, 'disabled');
 		}
 	},
 
@@ -41,7 +43,7 @@ EventHandler.prototype = {
 			, elem;
 
 		while (elem = elems[i++]) {
-			elem.removeEventListener('click', callback);
+			elem.removeEventListener('click', elem['func']);
 			classie.add(elem, 'disabled');
 		}
 	},
