@@ -33,6 +33,13 @@ h1 {
 	margin-top: -8px;
 }
 
+p.say-wow {
+	font: 32px "Comic Sans MS", "Marker Felt", sans-serif;
+	position: absolute;
+	display: block;
+	z-index: 100;
+}
+
 .game-won > p {
 	color: green;
 	font-weight: bold;
@@ -51,45 +58,6 @@ h1 {
 	content: "";
 	display: block;
 	clear: both;
-}
-
-input[type=checkbox] {
-	appearance: none;
-	border-radius: 15px;
-	cursor: pointer;
-	display: inline-block;
-	height: 31px;
-	padding: 1px;
-	position: relative;
-	margin: 0px;
-	width: 52px;
-	outline: 0;
-	transition: all 0.3s ease-out;
-	transform: scale(1);
-	float: left;
-	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-
-input[type=checkbox]:checked {
-	box-shadow: inset 0px 0px 0px 20px #666666;
-}
-
-input[type=checkbox]:checked:after {
-	left: 22px;
-}
-
-
-input[type=checkbox]:after {
-	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
-	border-radius: 15px;
-	content: '';
-	cursor: pointer;
-	height: 29px;
-	position: absolute;
-	width: 29px;
-	transition: all 0.1s ease-in 0.1s;
-	background: white;
 }
 
 .restart {

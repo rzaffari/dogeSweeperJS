@@ -22,13 +22,18 @@ EventHandler.prototype = {
 		};
 	},
 
-	attach: function (clas, callback) {
+	attach: function (clas, callback, scope) {
 		var i = 0
 			, elems = document.querySelectorAll(clas)
-			, elem;
+			, elem
+			, func = function (event) {
+				callback.call(this, event, scope);
+			};
 
 		while (elem = elems[i++]) {
-			elem.addEventListener('click', callback, false);
+			elem['func'] = func;
+			elem.addEventListener('click', func);
+			classie.remove(elem, 'disabled');
 		}
 	},
 
@@ -38,7 +43,7 @@ EventHandler.prototype = {
 			, elem;
 
 		while (elem = elems[i++]) {
-			elem.removeEventListener('click', callback);
+			elem.removeEventListener('click', elem['func']);
 			classie.add(elem, 'disabled');
 		}
 	},
@@ -48,7 +53,7 @@ EventHandler.prototype = {
 	},
 
 	flip: function(cell) {
-		var domCell = me.eventHandler.selectDOMCell(cell);
+		var domCell = this.selectDOMCell(cell);
 		if(!classie.has(domCell, 'flip')) {
 			setTimeout(function () {
 				domCell.click();
