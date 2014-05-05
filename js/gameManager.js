@@ -10,6 +10,7 @@ GameManager.prototype = {
 	start: function  () {
 		this.grid        	= new Grid(this.size);
 		this.eventHandler 	= new EventHandler();
+		this.messageHandler	= new MessageHandler();
 	    this.score       	= 0;
 	    this.won         	= false;
 	    this.dogesFlips		= 0;
@@ -27,7 +28,7 @@ GameManager.prototype = {
 		me.eventHandler.detach('.restart', me.reset, this);
 		
 		me.eventHandler.resetGrid();
-		me.eventHandler.clearMessage(me.over);
+		//me.eventHandler.clearMessage(me.over);
 		me.start();
 	},
 
@@ -115,7 +116,7 @@ GameManager.prototype = {
 
 	endGame: function () {
 		this.eventHandler.detach('.grid-cell', this.showTile);
-		this.eventHandler.message(this.won);
+		this.messageHandler.sayWow(this.won);
 	}
 
 	/*showAll: function () {
