@@ -16,8 +16,14 @@ EventHandler.prototype = {
 
 			for (var y = 0, ly = cells.length; y < ly; y++) {
 				var cell = cells[y];
-				cell.dataset.x = x;
-				cell.dataset.y = y;
+				if(cell.dataset){
+					cell.dataset.x = x;
+					cell.dataset.y = y;
+				} else{
+					cell.setAttribute("data-x", x);
+					cell.setAttribute("data-y", y);
+				}
+				
 			};
 		};
 	},
@@ -76,22 +82,7 @@ EventHandler.prototype = {
 
 	remainingCells: function() {
 		return this.gridContainer.querySelectorAll('.grid-cell:not(.flip)');
-	},
-
-	message: function (won) {
-		var clas = won ? "game-won" : "game-over"
-			, message = won ? "Such win!" : "Such over!";
-
-		classie.add(this.messageContainer, clas)
-		this.messageContainer.children[0].textContent = message;
-	},
-
-	clearMessage: function (won) {
-		var clas = won ? "game-won" : "game-over";
-		classie.remove(this.messageContainer, clas);
-		this.messageContainer.children[0].textContent = '';
-
 	}
-
+	
 };
 

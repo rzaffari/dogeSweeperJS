@@ -11,7 +11,6 @@ GameManager.prototype = {
 		this.grid        	= new Grid(this.size);
 		this.eventHandler 	= new EventHandler();
 		this.messageHandler	= new MessageHandler();
-	    this.score       	= 0;
 	    this.won         	= false;
 	    this.dogesFlips		= 0;
 
@@ -28,7 +27,6 @@ GameManager.prototype = {
 		me.eventHandler.detach('.restart', me.reset, this);
 		
 		me.eventHandler.resetGrid();
-		//me.eventHandler.clearMessage(me.over);
 		me.start();
 	},
 
@@ -60,7 +58,13 @@ GameManager.prototype = {
 			var cell = this
 				, me = scope
 				, inner = document.createElement("div")
-				, tile = me.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y });
+				, tile;
+
+			if(cell.dataset){
+				tile = me.grid.tileAt({ x: cell.dataset.x, y: cell.dataset.y });
+			} else{
+				tile = me.grid.tileAt({ x: cell.getAttribute("data-x"), y: cell.getAttribute("data-y")});
+			}
 
 			classie.add(inner, 'inner-tile');
 			inner.textContent = tile.displayValue();
@@ -118,28 +122,6 @@ GameManager.prototype = {
 		this.eventHandler.detach('.grid-cell', this.showTile);
 		this.messageHandler.sayWow(this.won);
 	}
-
-	/*showAll: function () {
-		var me = this
-			, gridContainer = document.querySelector(".grid-container")
-			, rows = gridContainer.children;
-
-		for (var x = 0, lx = rows.length; x < lx; x++) {
-			var cells = rows[x].children;
-
-			for (var y = 0, ly = cells.length; y < ly; y++) {
-				var cell = cells[y]
-					, inner = document.createElement("div")
-					, tile = me.grid.tileAt({ x: x, y: y });
-
-				classie.add(inner, 'inner-tile');
-				inner.textContent = tile.displayValue();
-
-				cell.appendChild(inner);
-			};
-		};
-
-	}*/
 
 };
 
