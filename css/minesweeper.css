@@ -28,26 +28,11 @@ h1 {
 	width: 500px;
 }
 
-.message-container {
-	position: absolute;
-	margin-top: -8px;
-}
-
 p.say-wow {
 	font: 32px "Comic Sans MS", "Marker Felt", sans-serif;
 	position: absolute;
 	display: block;
 	z-index: 100;
-}
-
-.game-won > p {
-	color: green;
-	font-weight: bold;
-}
-
-.game-over > p {
-	color: red;
-	font-weight: bold;
 }
 
 .controls {
@@ -118,10 +103,16 @@ p.say-wow {
 
 .grid-cell {
 	transform-style: preserve-3d;
+	backface-visibility: hidden;
+}
+
+.grid-cell .inner-tile {
+	backface-visibility: hidden;
 }
 
 .inner-cell {
 	background: rgba(255, 255, 255, 0.35);
+	z-index: 10;
 }
 
 .grid-cell:hover {
