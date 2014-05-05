@@ -6,7 +6,9 @@ function MessageHandler () {
 					];
 	this.sayLose 	= [
 						'Such Lose', 'Such Lost', 
-						'Very Loser', 'Wow'
+						'Very Loser', 'Wow',
+						'Much Defeat', 'So Terrible',
+						'Many Lost'
 					];
 	this.colors 	= [ "960DFF", "0CE8C6", "6F3", "FFF000", "E88470", "F0C", "240DFF", "87FF0D", "E81F18" ];
 
