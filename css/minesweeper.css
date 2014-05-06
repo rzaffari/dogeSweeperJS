@@ -3,8 +3,8 @@
 	background-size: contain !important;
 }
 
-.doge-flag {
-	background: #FFFFFF url("img/dogeFlag.png") center center no-repeat scroll !important;
+.doge-swag {
+	background: #FFFFFF url("img/dogeSwag.jpg") center center no-repeat scroll !important;
 	background-size: contain !important;
 }
 
@@ -28,8 +28,24 @@ h1 {
 	width: 500px;
 }
 
+.subHeading {
+	position: absolute;
+}
+
+.subHeading > p {
+	margin-top: 6px;
+	margin-left: 30px; 
+	font-size: 16px;
+	font-weight: bold;
+}
+
+p > strong {
+	color: rgb(226, 0, 0);
+}
+
 p.say-wow {
 	font: 32px "Comic Sans MS", "Marker Felt", sans-serif;
+	font-weight: bold;
 	position: absolute;
 	display: block;
 	z-index: 100;
@@ -103,11 +119,6 @@ p.say-wow {
 
 .grid-cell {
 	transform-style: preserve-3d;
-	backface-visibility: hidden;
-}
-
-.grid-cell .inner-tile {
-	backface-visibility: hidden;
 }
 
 .inner-cell {
@@ -129,7 +140,7 @@ p.say-wow {
 	background: #eee4da;
 	text-align: center;
 	font-weight: bold;
-	z-index: 10;
+	z-index: 20;
 	font-size: 35px;
 	backface-visibility: hidden;
 }
@@ -139,10 +150,7 @@ p.say-wow {
 	animation: flip 0.5s;
 }
 
-.flip:hover {
-	box-shadow: none;
-}
-
+.flip:hover,
 .disabled:hover {
 	box-shadow: none;
 }

@@ -23,9 +23,11 @@ GameManager.prototype = {
 	reset: function (event, scope) {
 		me = scope;
 
+		me.messageHandler.stopLoop = true;
+
 		me.eventHandler.detach('.grid-cell', me.showTile, this);
 		me.eventHandler.detach('.restart', me.reset, this);
-		
+
 		me.eventHandler.resetGrid();
 		me.start();
 	},
@@ -109,10 +111,9 @@ GameManager.prototype = {
 	},
 
 	verify: function() {
-		var cells = this.eventHandler.remainingCells()
-			, mines = this.grid.mineCells();
+		var cells = this.eventHandler.remainingCells();
 
-		if (cells.length === mines.length) {
+		if (cells.length === this.minesCount) {
 			this.won = true;
 			this.endGame();
 		}
