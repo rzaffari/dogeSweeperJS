@@ -8,10 +8,9 @@ function MessageHandler () {
 	this.sayLose 	= [
 						'Such Lost', 'So Stupid',
 						'Very Loser', 'Wow',
-						'Ugly Game', 'Many Lost',
+						'Ugly Game', 'Just Quit',
 						'Much Defeat', 'So Terrible',
-						'Wow', 'Doge Always Wins',
-						'Just Quit'
+						'Wow', 'Doge Always Wins'
 					];
 	this.colors 	= [ "960DFF", "0CE8C6", "6F3", "FFF000", "E88470", "F0C", "240DFF", "87FF0D", "E81F18" ];
 	this.sizes		= [ "48", "32", "38", "52"];
@@ -33,7 +32,7 @@ MessageHandler.prototype = {
     shoutWow: function() {
     	this.defineWow()
         this.body.appendChild(this.pElem);
-		setTimeout( this.cleanAndWow.bind(this), 900);
+		setTimeout( this.cleanAndWow.bind(this), 1000);
     },
 
     defineWow: function () {
@@ -43,8 +42,8 @@ MessageHandler.prototype = {
 			, leftPos;
 
 		phrase 	= Math.floor( ( Math.random() * this.wowShouts.length ) );
-		topPos 	= Math.floor( ( Math.random() * (window.innerHeight - 100) ) + 1 );
-        leftPos = Math.floor( ( Math.random() * (window.innerWidth - 100) ) + 1 );
+		topPos 	= Math.floor( ( Math.random() * (window.innerHeight - 200) ) + 1 );
+        leftPos = Math.floor( ( Math.random() * (window.innerWidth - 200) ) + 1 );
         color 	= Math.floor( ( Math.random() * this.colors.length) );
         size 	= Math.floor( ( Math.random() * this.sizes.length) );
 

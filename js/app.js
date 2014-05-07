@@ -1,3 +1,3 @@
 window.requestAnimationFrame(function () {
-  new GameManager(8);
+  new GameManager(6);
 });
