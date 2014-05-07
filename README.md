@@ -1,0 +1,4 @@
+dogeSweeperJS
+=============
+
+MineSweeper Doge version
