@@ -1,11 +1,12 @@
-function EventHandler () {
+function DOMHandler () {
+	this.content			= document.querySelector(".content");
+	this.dsContainer 		= document.querySelector(".ds-container");
 	this.gridContainer 		= document.querySelector(".grid-container");
-	this.messageContainer 	= document.querySelector(".message-container");
 
 	this.setupData();
 }
 
-EventHandler.prototype = {
+DOMHandler.prototype = {
 
 	setupData: function () {
 		var me = this
@@ -82,7 +83,10 @@ EventHandler.prototype = {
 
 	remainingCells: function() {
 		return this.gridContainer.querySelectorAll('.grid-cell:not(.flip)');
+	},
+
+	setupDataSize: function (size) {
+		this.content.setAttribute("data-grid-size", size);
 	}
-	
 };
 

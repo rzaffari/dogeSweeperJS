@@ -1,5 +1,6 @@
 function Grid(size) {
   this.size = size;
+  this.gridBuilder = new GridBuilder(size);
   this.cells = this.clearGrid();
   this.mines = [];
 

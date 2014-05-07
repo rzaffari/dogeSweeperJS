@@ -9,15 +9,17 @@ GameManager.prototype = {
 
 	start: function  () {
 		this.grid        	= new Grid(this.size);
-		this.eventHandler 	= new EventHandler();
+		this.domHandler 	= new DOMHandler();
 		this.messageHandler	= new MessageHandler();
 	    this.won         	= false;
 	    this.dogesFlips		= 0;
 
+	    this.domHandler.setupDataSize(this.size);
+	    
 	    this.setupTiles();
 
-	    this.eventHandler.attach('.grid-cell', this.showTile, this);
-	    this.eventHandler.attach('.restart', this.reset, this);
+	    this.domHandler.attach('.grid-cell', this.showTile, this);
+	    this.domHandler.attach('.restart', this.reset, this);
 	},
 
 	reset: function (event, scope) {
@@ -25,10 +27,10 @@ GameManager.prototype = {
 
 		me.messageHandler.stopLoop = true;
 
-		me.eventHandler.detach('.grid-cell', me.showTile, this);
-		me.eventHandler.detach('.restart', me.reset, this);
+		me.domHandler.detach('.grid-cell', me.showTile, this);
+		me.domHandler.detach('.restart', me.reset, this);
 
-		me.eventHandler.resetGrid();
+		me.domHandler.resetGrid();
 		me.start();
 	},
 
@@ -89,7 +91,7 @@ GameManager.prototype = {
 		if(document.querySelectorAll('.doge-jump').length == 0) classie.add(cell, 'doge-jump');
 
 		me.grid.mineCells().forEach( function (mine) {
-			me.eventHandler.flip(mine);
+			me.domHandler.flip(mine);
 		});
 
 		if(++me.dogesFlips == me.minesCount){
@@ -102,7 +104,7 @@ GameManager.prototype = {
 
 		if (tile.displayValue() === ""){
 			me.grid.neighborsOf(tile).forEach( function (neigh) {
-				me.eventHandler.flip(neigh);
+				me.domHandler.flip(neigh);
 			});
 		} else {
 			//Single tile or wave-border tile
@@ -111,7 +113,7 @@ GameManager.prototype = {
 	},
 
 	verify: function() {
-		var cells = this.eventHandler.remainingCells();
+		var cells = this.domHandler.remainingCells();
 
 		if (cells.length === this.minesCount) {
 			this.won = true;
@@ -120,7 +122,7 @@ GameManager.prototype = {
 	},
 
 	endGame: function () {
-		this.eventHandler.detach('.grid-cell', this.showTile);
+		this.domHandler.detach('.grid-cell', this.showTile);
 		this.messageHandler.sayWow(this.won);
 	}
 
