@@ -11,7 +11,7 @@ DOMHandler.prototype = {
 	setupData: function () {
 		var me = this
 			, rows = me.gridContainer.children;
-
+		
 		for (var x = 0, lx = rows.length; x < lx; x++) {
 			var cells = rows[x].children;
 
